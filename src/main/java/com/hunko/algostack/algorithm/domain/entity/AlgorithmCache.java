@@ -18,6 +18,7 @@ public class AlgorithmCache extends BaseEntity {
     @Embedded
     private AlgorithmId algorithmId;
     private String title;
+    @Enumerated(EnumType.STRING)
     private Result result;
     private String url;
     private LocalDate solvedDate;
