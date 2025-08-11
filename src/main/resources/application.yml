@@ -1,7 +1,11 @@
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username:
+    password:
+    url:
   application:
     name: algostack
-
   jpa:
     open-in-view: false
     show-sql: true
