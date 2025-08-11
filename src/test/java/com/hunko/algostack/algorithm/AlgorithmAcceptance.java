@@ -11,7 +11,7 @@ import java.util.Map;
 public final class AlgorithmAcceptance {
 
     public static ExtractableResponse<Response> 알고리즘_풀이_내역_등록(Map<String, String> body) {
-        ExtractableResponse<Response> response = RestAssured
+        return RestAssured
                 .given()
                 .body(body)
                 .contentType(ContentType.JSON)
@@ -20,11 +20,10 @@ public final class AlgorithmAcceptance {
                 .then()
                 .log().all()
                 .extract();
-        return response;
     }
 
     public static ExtractableResponse<Response> 월별_풀이_내역조회(int year, int month) {
-        ExtractableResponse<Response> response = RestAssured
+        return RestAssured
                 .given()
                 .param("year", year)
                 .param("month", month)
@@ -34,7 +33,6 @@ public final class AlgorithmAcceptance {
                 .then()
                 .log().all()
                 .extract();
-        return response;
     }
 
     public static ExtractableResponse<Response> 일별_풀이_내역(int year, int month, int day) {

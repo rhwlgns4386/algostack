@@ -11,7 +11,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import static com.hunko.algostack.algorithm.domain.mapper.AlgorithmReadModelMapper.toModel;
@@ -51,10 +50,7 @@ public class AlgorithmReadServiceTest {
 
     @Test
     void 일별_푼_알고리즘_조회() {
-        Platform platform = Platform.LEETCODE;
         Long userId = 1L;
-        Long platformAlgorithmId = 1L;
-        AlgorithmId algorithmId = AlgorithmId.of(platform, platformAlgorithmId);
 
         when(algorithmCacheRepository.findByUserIdAndRange(eq(userId), any(),any()))
                 .thenReturn(List.of(

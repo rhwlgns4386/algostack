@@ -104,7 +104,7 @@ class AlgorithmAcceptanceTest {
                                 "platform", "LEETCODE",
                                 "result", "SUCCESS",
                                 "url", "https://leetcode.com/problems/two-sum/description"));
-        ;
+
 
     }
 
