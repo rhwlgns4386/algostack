@@ -1,9 +1,12 @@
 package com.hunko.algostack.algorithm.domain.event.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hunko.algostack.algorithm.domain.entity.BaseEntity;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 @Entity
 @NoArgsConstructor
@@ -18,6 +21,7 @@ public class AlgorithmEvent extends BaseEntity {
     private boolean isSuccess;
 
     @Column(columnDefinition = "JSON")
+    @Type(JsonType.class)
     private String data;
 
     public AlgorithmEvent(String eventName, String data) {

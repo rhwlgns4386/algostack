@@ -1,10 +1,11 @@
 package com.hunko.algostack.algorithm.domain.event.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hunko.algostack.algorithm.domain.event.mapper.EventMapper;
 import com.hunko.algostack.algorithm.domain.event.queue.AlgorithmEventQueue;
 import com.hunko.algostack.algorithm.domain.event.AlgorithmEventRepository;
 import com.hunko.algostack.algorithm.domain.event.sender.AlgorithmEventSender;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +14,9 @@ import org.springframework.context.annotation.Configuration;
 public class AlgorithmConfig {
 
     private final AlgorithmEventRepository algorithmEventRepository;
-    private final ObjectMapper objectMapper;
+    private final EventMapper eventMapper;
+    @Value("${algostack.queue-size:#{null}}")
+    private Integer queueSize;
 
     @Bean
     public AlgorithmEventSender algorithmEventSender() {
@@ -22,6 +25,10 @@ public class AlgorithmConfig {
 
     @Bean
     public AlgorithmEventQueue algorithmEventQueue() {
-        return new AlgorithmEventQueue(algorithmEventRepository, objectMapper);
+        AlgorithmEventQueue queue = new AlgorithmEventQueue(algorithmEventRepository, eventMapper);
+        if (queueSize != null) {
+            queue.setMaxQueueSize(queueSize);
+        }
+        return queue;
     }
 }

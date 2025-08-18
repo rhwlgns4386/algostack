@@ -29,9 +29,6 @@ class AlgorithmAcceptanceTest {
     @Autowired
     private DatabaseCleanup databaseCleanup;
 
-    @Autowired
-    private CacheUpdateScheduler cacheUpdateScheduler;
-
     @BeforeEach
     void setup() {
         RestAssured.port = this.prot;
@@ -78,7 +75,6 @@ class AlgorithmAcceptanceTest {
                 "url", "https://leetcode.com/problems/add-two-numbers/description");
         알고리즘_풀이_내역_등록(item2Failed);
 
-        processScadule();
         LocalDateTime now = LocalDateTime.now();
 
         ExtractableResponse<Response> response = 월별_풀이_내역조회(now.getYear(), now.getMonthValue());
@@ -133,8 +129,6 @@ class AlgorithmAcceptanceTest {
                 "url", "https://leetcode.com/problems/add-two-numbers/description");
         알고리즘_풀이_내역_등록(item2Failed);
 
-        processScadule();
-
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonth().getValue();
@@ -174,7 +168,6 @@ class AlgorithmAcceptanceTest {
                 "url", "https://leetcode.com/problems/two-sum/description");
 
         알고리즘_풀이_내역_등록(body);
-        processScadule();
 
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -195,9 +188,5 @@ class AlgorithmAcceptanceTest {
                 .containsEntry("result", "SUCCESS")
                 .containsEntry("url", "https://leetcode.com/problems/two-sum/description");
 
-    }
-
-    private void processScadule() {
-        cacheUpdateScheduler.updateCache();
     }
 }

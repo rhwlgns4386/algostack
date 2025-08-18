@@ -12,6 +12,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class EventSenderThread extends Thread {
 
+    private static final int WAIT_SECOND = 30;
+
     private final AlgorithmEventQueue algorithmEventQueue;
 
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -23,7 +25,7 @@ public class EventSenderThread extends Thread {
                 Object event = algorithmEventQueue.poll();
                 if(event == null){
                     try {
-                        TimeUnit.SECONDS.sleep(30);
+                        TimeUnit.SECONDS.sleep(WAIT_SECOND);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
