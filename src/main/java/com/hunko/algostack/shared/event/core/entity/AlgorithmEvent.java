@@ -5,10 +5,12 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(indexes = {@Index(name = "idx_event_issuccess",columnList = "is_success")})
+@Table(indexes = {@Index(name = "idx_event_is_success",columnList = "is_success")})
 @NoArgsConstructor
 @Getter
 public class AlgorithmEvent extends BaseEntity {

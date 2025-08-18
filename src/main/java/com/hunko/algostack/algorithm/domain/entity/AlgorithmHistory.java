@@ -22,7 +22,8 @@ public class AlgorithmHistory extends BaseEntity {
     @Embedded
     private AlgorithmId algorithmId;
 
-    private Long userId;
+    @Embedded
+    private UserId userId;
 
     private String title;
 
@@ -31,7 +32,7 @@ public class AlgorithmHistory extends BaseEntity {
 
     private String url;
 
-    public AlgorithmHistory(Long userId, AlgorithmId algorithmId, String title, Result result, String url) {
+    public AlgorithmHistory(UserId userId, AlgorithmId algorithmId, String title, Result result, String url) {
         this.userId = userId;
         this.algorithmId = algorithmId;
         this.title = title;

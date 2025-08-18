@@ -3,6 +3,7 @@ package com.hunko.algostack.algorithm.domain.service.event;
 import com.hunko.algostack.algorithm.domain.entity.AlgorithmHistory;
 import com.hunko.algostack.algorithm.domain.entity.AlgorithmId;
 import com.hunko.algostack.algorithm.domain.entity.Result;
+import com.hunko.algostack.algorithm.domain.entity.UserId;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class AlgorithmSolvedEvent {
 
     private AlgorithmId algorithmId;
 
-    private Long userId;
+    private UserId userId;
 
     private String title;
 

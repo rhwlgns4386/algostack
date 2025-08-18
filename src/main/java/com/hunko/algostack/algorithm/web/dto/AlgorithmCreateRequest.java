@@ -1,5 +1,6 @@
 package com.hunko.algostack.algorithm.web.dto;
 
+import com.hunko.algostack.algorithm.domain.entity.UserId;
 import com.hunko.algostack.algorithm.domain.vo.AlgorithmHistorySaveCommand;
 import com.hunko.algostack.algorithm.domain.entity.Platform;
 import com.hunko.algostack.algorithm.domain.entity.Result;
@@ -19,7 +20,7 @@ public record AlgorithmCreateRequest(
         @URL
         String url) {
 
-    public AlgorithmHistorySaveCommand toCommand(Long userId) {
+    public AlgorithmHistorySaveCommand toCommand(UserId userId) {
         return AlgorithmHistorySaveCommand.builder()
                 .userId(userId)
                 .platformAlgorithmId(id)

@@ -16,16 +16,23 @@ public class AlgorithmCache extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+
+    @Embedded
+    private UserId userId;
+
     @Embedded
     private AlgorithmId algorithmId;
+
     private String title;
+
     @Enumerated(EnumType.STRING)
     private Result result;
+
     private String url;
+
     private LocalDate solvedDate;
 
-    public AlgorithmCache(Long userId, AlgorithmId algorithmId, String title, Result result, String url, LocalDate solvedDate) {
+    public AlgorithmCache(UserId userId, AlgorithmId algorithmId, String title, Result result, String url, LocalDate solvedDate) {
         this.userId = userId;
         this.algorithmId = algorithmId;
         this.title = title;

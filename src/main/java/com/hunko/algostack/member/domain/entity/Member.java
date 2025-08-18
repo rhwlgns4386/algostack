@@ -3,10 +3,12 @@ package com.hunko.algostack.member.domain.entity;
 import com.hunko.algostack.shared.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
@@ -26,5 +28,18 @@ public class Member extends BaseEntity {
     public Member(Email email, Password password, String nickname) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
+    }
+
+    public boolean isSamePassword(String password) {
+        return this.password.isSamePassword(password);
+    }
+
+    public String getEmailValue() {
+        return email.getEmail();
+    }
+
+    public String getPasswordValue() {
+        return password.getPassword();
     }
 }
