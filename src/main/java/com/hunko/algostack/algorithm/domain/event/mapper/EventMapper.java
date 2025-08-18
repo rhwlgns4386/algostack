@@ -1,7 +1,6 @@
 package com.hunko.algostack.algorithm.domain.event.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunko.algostack.algorithm.domain.event.entity.AlgorithmEvent;
 import com.hunko.algostack.algorithm.domain.event.exception.JsonDeSerializeException;
@@ -18,7 +17,7 @@ public class EventMapper {
     public Object toEvent(AlgorithmEvent algorithmEvent) throws JsonDeSerializeException {
         try {
             Class<?> aClass = Class.forName(algorithmEvent.getEventName());
-            return objectMapper.readValue(algorithmEvent.getData().toString(), aClass);
+            return objectMapper.readValue(algorithmEvent.getData(), aClass);
         } catch (ClassNotFoundException | JsonProcessingException e) {
             throw new JsonDeSerializeException(String.format("eventName : %s data : %s 역직렬화가 불가능합니다", algorithmEvent.getEventName(), algorithmEvent.getData()), e);
         }

@@ -1,6 +1,5 @@
 package com.hunko.algostack.algorithm.domain.event.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hunko.algostack.algorithm.domain.entity.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
