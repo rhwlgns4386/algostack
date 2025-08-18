@@ -1,6 +1,6 @@
 package com.hunko.algostack.shared.event.core.entity;
 
-import com.hunko.algostack.algorithm.domain.entity.BaseEntity;
+import com.hunko.algostack.shared.common.entity.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Getter;

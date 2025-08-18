@@ -1,4 +1,4 @@
-package com.hunko.algostack.algorithm.domain.entity;
+package com.hunko.algostack.shared.common.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

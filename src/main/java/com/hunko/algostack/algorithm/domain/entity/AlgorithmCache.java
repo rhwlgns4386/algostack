@@ -1,5 +1,6 @@
 package com.hunko.algostack.algorithm.domain.entity;
 
+import com.hunko.algostack.shared.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
