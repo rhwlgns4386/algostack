@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class AlgorithmId {
+
     @Enumerated(EnumType.STRING)
     private Platform platform;
     private Long platformAlgorithmId;

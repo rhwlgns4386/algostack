@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
+@Table(indexes = @Index(name = "idx_algorithm_user_id_solved_date", columnList = "user_id, solved_date"))
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AlgorithmCache extends BaseEntity {
@@ -23,7 +24,7 @@ public class AlgorithmCache extends BaseEntity {
     private String url;
     private LocalDate solvedDate;
 
-    public AlgorithmCache(Long userId, AlgorithmId algorithmId,String title ,Result result, String url, LocalDate solvedDate) {
+    public AlgorithmCache(Long userId, AlgorithmId algorithmId, String title, Result result, String url, LocalDate solvedDate) {
         this.userId = userId;
         this.algorithmId = algorithmId;
         this.title = title;
@@ -33,7 +34,7 @@ public class AlgorithmCache extends BaseEntity {
     }
 
     public void updateResult(Result result) {
-        if(this.result.isSuccess()){
+        if (this.result.isSuccess()) {
             return;
         }
         this.result = result;

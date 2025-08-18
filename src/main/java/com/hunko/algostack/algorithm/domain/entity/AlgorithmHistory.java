@@ -11,6 +11,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = {@Index(name = "idx_create_at",columnList = "created_at"),@Index(name = "idx_user_id_platform_platform_id",columnList = "user_id,platform_algorithm_id,platform")})
 public class AlgorithmHistory extends BaseEntity {
 
     @Id
