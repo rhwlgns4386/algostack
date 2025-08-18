@@ -1,5 +1,6 @@
 package com.hunko.algostack.member.config;
 
+import com.hunko.algostack.member.domain.entity.Password;
 import com.hunko.algostack.member.web.filter.AuthenticationFilter;
 import com.hunko.algostack.member.web.provider.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -24,12 +27,12 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain authFilterChain(HttpSecurity http) throws Exception {
         return http
+                .securityMatcher("/auth/**")
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .securityMatcher("/auth/**")
                 .authorizeHttpRequests(auth ->
                         auth.anyRequest().permitAll()
                 )
@@ -49,5 +52,10 @@ public class AuthConfig {
                         auth.anyRequest().authenticated()
                 ).addFilterBefore(new AuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

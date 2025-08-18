@@ -6,6 +6,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,11 @@ public class TokenProvider {
     private static final String AUTH_HEADER = HttpHeaders.AUTHORIZATION;
     private static final String BEARER = "Bearer ";
 
-    //TODO : 설정 파일로 이동 해야 함
+    @Value("${jwt.secret}")
     private String secret;
+    @Value("${jwt.access-token-validity}")
     private int accessTokenExpireInSeconds = 3600;
+    @Value("${jwt.refresh-token-validity}")
     private int refreshTokenExpireInSeconds = 3600;
 
     public ResponseCookie refreshTokenCookie(MemberInfo memberInfo) {
@@ -67,8 +70,7 @@ public class TokenProvider {
                     .parseSignedClaims(token)
                     .getPayload();
             String email = claims.getSubject();
-            String nickname = claims.get("nickname", String.class);
-            return new  MemberInfo(email, nickname);
+            return new  MemberInfo(email, null);
         }catch (ExpiredJwtException e){
             throw new JwtAuthenticationException(e);
         }
