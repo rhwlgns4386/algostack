@@ -1,6 +1,6 @@
 package com.hunko.algostack.algorithm.domain.service;
 
-import com.hunko.algostack.algorithm.domain.event.sender.AlgorithmEventSender;
+import com.hunko.algostack.shared.event.core.sender.AlgorithmEventSaver;
 import com.hunko.algostack.algorithm.domain.vo.AlgorithmHistorySaveCommand;
 import com.hunko.algostack.algorithm.domain.entity.*;
 import org.assertj.core.api.Assertions;
@@ -15,7 +15,7 @@ class AlgorithmHistoryServiceTest {
     @Mock
     private AlgorithmHistoryRepository algorithmHistoryRepository;
     @Mock
-    private AlgorithmEventSender sender;
+    private AlgorithmEventSaver sender;
 
     @Test
     void 알고리즘_목록_저장() {

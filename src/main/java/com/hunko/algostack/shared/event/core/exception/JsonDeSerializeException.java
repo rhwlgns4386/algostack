@@ -1,4 +1,4 @@
-package com.hunko.algostack.algorithm.domain.event.exception;
+package com.hunko.algostack.shared.event.core.exception;
 
 public class JsonDeSerializeException extends RuntimeException {
     public JsonDeSerializeException(String message, Exception e) {

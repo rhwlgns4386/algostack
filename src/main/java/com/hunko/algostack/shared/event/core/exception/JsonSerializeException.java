@@ -1,4 +1,4 @@
-package com.hunko.algostack.algorithm.domain.event.exception;
+package com.hunko.algostack.shared.event.core.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

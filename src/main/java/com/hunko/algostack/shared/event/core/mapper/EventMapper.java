@@ -1,10 +1,10 @@
-package com.hunko.algostack.algorithm.domain.event.mapper;
+package com.hunko.algostack.shared.event.core.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hunko.algostack.algorithm.domain.event.entity.AlgorithmEvent;
-import com.hunko.algostack.algorithm.domain.event.exception.JsonDeSerializeException;
-import com.hunko.algostack.algorithm.domain.event.exception.JsonSerializeException;
+import com.hunko.algostack.shared.event.core.entity.AlgorithmEvent;
+import com.hunko.algostack.shared.event.core.exception.JsonDeSerializeException;
+import com.hunko.algostack.shared.event.core.exception.JsonSerializeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

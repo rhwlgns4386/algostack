@@ -1,4 +1,4 @@
-package com.hunko.algostack.algorithm.domain.event.entity;
+package com.hunko.algostack.shared.event.core.entity;
 
 import com.hunko.algostack.algorithm.domain.entity.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;

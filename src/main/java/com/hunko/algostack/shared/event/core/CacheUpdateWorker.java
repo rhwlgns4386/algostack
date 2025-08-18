@@ -1,6 +1,6 @@
-package com.hunko.algostack.algorithm.domain.event;
+package com.hunko.algostack.shared.event.core;
 
-import com.hunko.algostack.algorithm.domain.event.queue.AlgorithmEventQueue;
+import com.hunko.algostack.shared.event.core.queue.AlgorithmEventQueue;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;

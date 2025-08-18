@@ -1,7 +1,7 @@
-package com.hunko.algostack.algorithm.domain.event;
+package com.hunko.algostack.shared.event.core;
 
-import com.hunko.algostack.algorithm.domain.event.exception.JsonDeSerializeException;
-import com.hunko.algostack.algorithm.domain.event.queue.AlgorithmEventQueue;
+import com.hunko.algostack.shared.event.core.exception.JsonDeSerializeException;
+import com.hunko.algostack.shared.event.core.queue.AlgorithmEventQueue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

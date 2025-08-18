@@ -1,6 +1,6 @@
-package com.hunko.algostack.algorithm.domain.event;
+package com.hunko.algostack.shared.event.core;
 
-import com.hunko.algostack.algorithm.domain.event.entity.AlgorithmEvent;
+import com.hunko.algostack.shared.event.core.entity.AlgorithmEvent;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 

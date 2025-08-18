@@ -1,10 +1,10 @@
-package com.hunko.algostack.algorithm.domain.event.queue;
+package com.hunko.algostack.shared.event.core.queue;
 
-import com.hunko.algostack.algorithm.domain.event.AlgorithmEventRepository;
-import com.hunko.algostack.algorithm.domain.event.mapper.EventMapper;
-import com.hunko.algostack.algorithm.domain.event.exception.JsonDeSerializeException;
-import com.hunko.algostack.algorithm.domain.event.exception.JsonSerializeException;
-import com.hunko.algostack.algorithm.domain.event.entity.AlgorithmEvent;
+import com.hunko.algostack.shared.event.core.AlgorithmEventRepository;
+import com.hunko.algostack.shared.event.core.mapper.EventMapper;
+import com.hunko.algostack.shared.event.core.exception.JsonDeSerializeException;
+import com.hunko.algostack.shared.event.core.exception.JsonSerializeException;
+import com.hunko.algostack.shared.event.core.entity.AlgorithmEvent;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

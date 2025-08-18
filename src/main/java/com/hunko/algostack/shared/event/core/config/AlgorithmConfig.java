@@ -1,9 +1,9 @@
-package com.hunko.algostack.algorithm.domain.event.config;
+package com.hunko.algostack.shared.event.core.config;
 
-import com.hunko.algostack.algorithm.domain.event.mapper.EventMapper;
-import com.hunko.algostack.algorithm.domain.event.queue.AlgorithmEventQueue;
-import com.hunko.algostack.algorithm.domain.event.AlgorithmEventRepository;
-import com.hunko.algostack.algorithm.domain.event.sender.AlgorithmEventSender;
+import com.hunko.algostack.shared.event.core.mapper.EventMapper;
+import com.hunko.algostack.shared.event.core.queue.AlgorithmEventQueue;
+import com.hunko.algostack.shared.event.core.AlgorithmEventRepository;
+import com.hunko.algostack.shared.event.core.sender.AlgorithmEventSaver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,8 @@ public class AlgorithmConfig {
     private Integer queueSize;
 
     @Bean
-    public AlgorithmEventSender algorithmEventSender() {
-        return new AlgorithmEventSender(algorithmEventQueue());
+    public AlgorithmEventSaver algorithmEventSender() {
+        return new AlgorithmEventSaver(algorithmEventQueue());
     }
 
     @Bean
