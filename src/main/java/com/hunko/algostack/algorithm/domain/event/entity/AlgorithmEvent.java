@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 @Entity
+@Table(indexes = {@Index(name = "idx_event_issuccess",columnList = "is_success")})
 @NoArgsConstructor
 @Getter
 public class AlgorithmEvent extends BaseEntity {
