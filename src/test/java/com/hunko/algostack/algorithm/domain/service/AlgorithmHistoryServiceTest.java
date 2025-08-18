@@ -1,5 +1,6 @@
 package com.hunko.algostack.algorithm.domain.service;
 
+import com.hunko.algostack.algorithm.domain.event.sender.AlgorithmEventSender;
 import com.hunko.algostack.algorithm.domain.vo.AlgorithmHistorySaveCommand;
 import com.hunko.algostack.algorithm.domain.entity.*;
 import org.assertj.core.api.Assertions;
@@ -13,10 +14,12 @@ class AlgorithmHistoryServiceTest {
 
     @Mock
     private AlgorithmHistoryRepository algorithmHistoryRepository;
+    @Mock
+    private AlgorithmEventSender sender;
 
     @Test
     void 알고리즘_목록_저장() {
-        AlgorithmHistoryService algorithmHistoryService = new AlgorithmHistoryService(algorithmHistoryRepository);
+        AlgorithmHistoryService algorithmHistoryService = new AlgorithmHistoryService(algorithmHistoryRepository, sender);
         Long userId = 1L;
         AlgorithmHistorySaveCommand algorithmHistorySaveCommand = AlgorithmHistorySaveCommand.builder()
                 .platformAlgorithmId(1L)

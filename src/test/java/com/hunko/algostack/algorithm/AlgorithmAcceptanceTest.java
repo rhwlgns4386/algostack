@@ -1,6 +1,5 @@
 package com.hunko.algostack.algorithm;
 
-import com.hunko.algostack.algorithm.domain.scheduler.CacheUpdateScheduler;
 import com.hunko.algostack.algorithm.util.DatabaseCleanup;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
