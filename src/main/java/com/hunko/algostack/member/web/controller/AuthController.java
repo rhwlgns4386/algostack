@@ -8,6 +8,7 @@ import com.hunko.algostack.member.web.dto.AuthLoginResponse;
 import com.hunko.algostack.member.web.dto.AuthSingInRequest;
 import com.hunko.algostack.member.web.provider.TokenProvider;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthLoginResponse> refresh(@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+    public ResponseEntity<AuthLoginResponse> refresh(@Valid @NotBlank @RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
 
         String email = tokenProvider.getEmailFromToken(refreshToken);
         String jti = tokenProvider.getJtiFromToken(refreshToken);
@@ -51,7 +52,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/logout")
-    public void logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+    public void logout(@Valid @NotBlank @RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
         String jti = tokenProvider.getJtiFromToken(refreshToken);
         authService.addBlackList(jti);
     }
