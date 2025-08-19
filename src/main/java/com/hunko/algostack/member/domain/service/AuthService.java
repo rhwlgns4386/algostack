@@ -1,5 +1,7 @@
 package com.hunko.algostack.member.domain.service;
 
+import com.hunko.algostack.member.domain.entity.BlackLists;
+import com.hunko.algostack.member.domain.entity.Email;
 import com.hunko.algostack.member.domain.entity.Member;
 import com.hunko.algostack.member.domain.vo.LoginCommand;
 import com.hunko.algostack.member.domain.vo.MemberInfo;
@@ -17,21 +19,26 @@ import static com.hunko.algostack.member.domain.mapper.MemberMapper.toMemberInfo
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
+    private final BlackListService blackListService;
 
     public MemberInfo login(LoginCommand loginCommand) {
-        Member member = memberRepository.findByEmail(loginCommand.email()).orElseThrow(LoginException::new);
-        if (!member.isSamePassword(loginCommand.password())) {
-            throw new LoginException();
-        }
-        return toMemberInfo(member);
+        return memberService.login(loginCommand.email(), loginCommand.password());
+    }
+
+    public MemberInfo refresh(String jti, Email email) {
+
+        blackListService.validExpireFrom(jti);
+
+        blackListService.addBlackList(jti);
+        return memberService.getMemberFrom(email);
+    }
+
+    public void addBlackList(String jti) {
+        blackListService.validExpireFrom(jti);
     }
 
     public void singIn(SingInCommand command) {
-        Optional<Member> byEmail = memberRepository.findByEmail(command.emailObject());
-        if (byEmail.isPresent()) {
-            throw new SingInException();
-        }
-        memberRepository.save(command.toEntity());
+        memberService.signIn(command);
     }
 }

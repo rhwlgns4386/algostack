@@ -6,6 +6,6 @@ import com.hunko.algostack.member.domain.vo.MemberInfo;
 public class MemberMapper {
 
     public static MemberInfo toMemberInfo(Member member) {
-        return new MemberInfo(member.getEmailValue(), member.getNickname());
+        return new MemberInfo(member.getId(), member.getEmailValue(), member.getNickname());
     }
 }

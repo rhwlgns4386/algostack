@@ -18,6 +18,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 
+import static com.hunko.algostack.member.web.provider.JtiGenerator.createJtiId;
+
 @Component
 @RequiredArgsConstructor
 public class TokenProvider {
@@ -28,9 +30,9 @@ public class TokenProvider {
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.access-token-validity}")
-    private int accessTokenExpireInSeconds = 3600;
+    private int accessTokenExpireInSeconds;
     @Value("${jwt.refresh-token-validity}")
-    private int refreshTokenExpireInSeconds = 3600;
+    private int refreshTokenExpireInSeconds;
 
     public ResponseCookie refreshTokenCookie(MemberInfo memberInfo) {
         return ResponseCookie.from("refreshToken", createRefreshToken(memberInfo))
@@ -46,6 +48,7 @@ public class TokenProvider {
         return Jwts.builder()
                 .signWith(key)
                 .subject(memberInfo.email())
+                .id(createJti(memberInfo))
                 .issuedAt(issuedAt())
                 .expiration(expiresAt(refreshTokenExpireInSeconds))
                 .compact();
@@ -63,21 +66,46 @@ public class TokenProvider {
     }
 
     public MemberInfo toInfo(String token) {
+        String email = getEmailFromToken(token);
+        return new MemberInfo(null, email, null);
+    }
+
+    private SecretKey getKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public Optional<String> getToken(HttpServletRequest request) {
+        String header = request.getHeader(AUTH_HEADER);
+        if (header == null || !header.startsWith(BEARER)) {
+            return Optional.empty();
+        }
+        return Optional.of(header.substring(BEARER.length()));
+    }
+
+    public String getEmailFromToken(String token) {
         try {
             Claims claims = Jwts.parser()
                     .verifyWith(getKey())
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
-            String email = claims.getSubject();
-            return new  MemberInfo(email, null);
-        }catch (ExpiredJwtException e){
+            return claims.getSubject();
+        } catch (JwtException e) {
             throw new JwtAuthenticationException(e);
         }
     }
 
-    private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    public String getJtiFromToken(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(getKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+            return claims.getId();
+        } catch (JwtException e) {
+            throw new JwtAuthenticationException(e);
+        }
     }
 
     private Date issuedAt() {
@@ -94,11 +122,7 @@ public class TokenProvider {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    public Optional<String> getToken(HttpServletRequest request) {
-        String header = request.getHeader(AUTH_HEADER);
-        if (header == null || !header.startsWith(BEARER)) {
-            return Optional.empty();
-        }
-        return Optional.of(header.substring(BEARER.length()));
+    private static String createJti(MemberInfo memberInfo) {
+        return createJtiId(new UserIdKey(memberInfo.userId())).getJti();
     }
 }
