@@ -2,30 +2,29 @@ package com.hunko.algostack.member.web.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunko.algostack.member.domain.vo.MemberInfo;
+import com.hunko.algostack.member.exception.ErrorStatus;
 import com.hunko.algostack.member.exception.JwtAuthenticationException;
-import com.hunko.algostack.member.exception.SingInException;
 import com.hunko.algostack.member.web.provider.TokenProvider;
+import com.hunko.algostack.shared.common.exception.mapper.ErrorResponseMapper;
+import com.hunko.algostack.shared.common.exception.response.ErrorResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.token.TokenService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
+    private final ErrorHandler errorHandler;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -37,12 +36,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             try {
                memberInfo = tokenProvider.toInfo(tokenValue);
             }catch (JwtAuthenticationException singInException){
-                response.setContentType("application/json;charset=UTF-8");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                errorHandler.writeAuthErrorResponse(response);
                 return;
             } catch (Exception e){
-                response.setContentType("application/json;charset=UTF-8");
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                errorHandler.writeServerErrorResponse(response);
                 return;
             }
 

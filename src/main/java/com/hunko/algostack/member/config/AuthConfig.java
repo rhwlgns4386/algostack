@@ -1,7 +1,9 @@
 package com.hunko.algostack.member.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunko.algostack.member.domain.entity.Password;
 import com.hunko.algostack.member.web.filter.AuthenticationFilter;
+import com.hunko.algostack.member.web.filter.ErrorHandler;
 import com.hunko.algostack.member.web.provider.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class AuthConfig {
 
     private final TokenProvider tokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Order(1)
     @Bean
@@ -50,7 +53,7 @@ public class AuthConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.anyRequest().authenticated()
-                ).addFilterBefore(new AuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                ).addFilterBefore(new AuthenticationFilter(tokenProvider,new ErrorHandler(objectMapper)), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

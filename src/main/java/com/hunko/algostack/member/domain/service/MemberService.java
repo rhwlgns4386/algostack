@@ -4,8 +4,7 @@ import com.hunko.algostack.member.domain.entity.Email;
 import com.hunko.algostack.member.domain.entity.Member;
 import com.hunko.algostack.member.domain.vo.MemberInfo;
 import com.hunko.algostack.member.domain.vo.SingInCommand;
-import com.hunko.algostack.member.exception.LoginException;
-import com.hunko.algostack.member.exception.SingInException;
+import com.hunko.algostack.member.exception.ErrorStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,23 +18,23 @@ public class MemberService {
 
     public final MemberRepository memberRepository;
 
-    public MemberInfo login(Email email,String password) throws LoginException {
-        Member member = memberRepository.findByEmail(email).orElseThrow(LoginException::new);
+    public MemberInfo login(Email email,String password) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(ErrorStatus.LOGIN_FAIL::toException);
         if (!member.isSamePassword(password)) {
-            throw new LoginException();
+            ErrorStatus.LOGIN_FAIL.throwException();
         }
         return toMemberInfo(member);
     }
 
     public MemberInfo getMemberFrom(Email email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(LoginException::new);
+        Member member = memberRepository.findByEmail(email).orElseThrow(ErrorStatus.LOGIN_FAIL::toException);
         return toMemberInfo(member);
     }
 
     public void signIn(SingInCommand command){
         Optional<Member> byEmail = memberRepository.findByEmail(command.emailObject());
         if (byEmail.isPresent()) {
-            throw new SingInException();
+            ErrorStatus.SING_IN_FAIL.throwException();
         }
         memberRepository.save(command.toEntity());
     }
