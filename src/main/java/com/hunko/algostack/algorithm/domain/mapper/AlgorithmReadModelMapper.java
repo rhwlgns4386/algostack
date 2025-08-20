@@ -15,7 +15,7 @@ public class AlgorithmReadModelMapper {
                 algorithmCache.getTitle(),
                 algorithmCache.getResult(),
                 algorithmCache.getUrl(),
-                algorithmCache.getSolvedDate()
+                algorithmCache.getLastSolvedAt()
         );
     }
 
@@ -26,7 +26,7 @@ public class AlgorithmReadModelMapper {
                 history.getTitle(),
                 history.getResult(),
                 history.getUrl(),
-                history.getCreatedAt().toLocalDate()
+                history.getSolvedAt()
         );
     }
 }

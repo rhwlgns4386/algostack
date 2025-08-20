@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.URL;
 
+import java.time.LocalDateTime;
+
 public record AlgorithmCreateRequest(
         @NotNull
         Long id,
@@ -18,7 +20,8 @@ public record AlgorithmCreateRequest(
         @NotNull
         Result result,
         @URL
-        String url) {
+        String url,
+        LocalDateTime solvedAt) {
 
     public AlgorithmHistorySaveCommand toCommand(UserId userId) {
         return AlgorithmHistorySaveCommand.builder()
@@ -28,6 +31,7 @@ public record AlgorithmCreateRequest(
                 .url(url)
                 .platform(platform)
                 .result(result)
+                .solvedAt(solvedAt)
                 .build();
     }
 }

@@ -19,12 +19,12 @@ public class AlgorithmReadService {
     private final AlgorithmHistoryRepository algorithmHistoryRepository;
 
     public List<AlgorithmReadModel> getAlgorithmFrom(UserId userId, DateRange dateRange) {
-        return algorithmCacheRepository.findByUserIdAndRange(userId, dateRange.startDate(), dateRange.endDate())
+        return algorithmCacheRepository.findByUserIdAndRange(userId, dateRange.getStartDateTime(), dateRange.getEndDateTime())
                 .stream().map(AlgorithmReadModelMapper::toModel).toList();
     }
 
     public List<AlgorithmReadModel> getListFrom(UserId userId, AlgorithmId algorithmId) {
-        return algorithmHistoryRepository.findAllByUserIdAndAlgorithmId(userId, algorithmId)
+        return algorithmHistoryRepository.findAllByUserIdAndAlgorithmIdOrderBySolvedAtDesc(userId, algorithmId)
                 .stream().map(AlgorithmReadModelMapper::toModel).toList();
     }
 }

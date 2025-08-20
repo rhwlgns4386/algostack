@@ -34,7 +34,7 @@ public class AlgorithmReadServiceTest {
         Long userId = 1L;
         Long platformAlgorithmId = 1L;
         AlgorithmId algorithmId = AlgorithmId.of(platform, platformAlgorithmId);
-        when(algorithmHistoryRepository.findAllByUserIdAndAlgorithmId(userId, algorithmId))
+        when(algorithmHistoryRepository.findAllByUserIdAndAlgorithmIdOrderBySolvedAtDesc(userId, algorithmId))
                 .thenReturn(List.of(
                         createDefaultAlgorithm(1L, userId, Result.SUCCESS),
                         createDefaultAlgorithm(2L, userId, Result.FAIL)

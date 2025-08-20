@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AlgorithmHistoryRepository extends JpaRepository<AlgorithmHistory, Long> {
-    List<AlgorithmHistory> findAllByUserIdAndAlgorithmId(UserId userId, AlgorithmId algorithmId);
+    List<AlgorithmHistory> findAllByUserIdAndAlgorithmIdOrderBySolvedAtDesc(UserId userId, AlgorithmId algorithmId);
 
     List<AlgorithmHistory> findByCreatedAtAfter(LocalDateTime lastedUpdateDate, Limit limit);
 }

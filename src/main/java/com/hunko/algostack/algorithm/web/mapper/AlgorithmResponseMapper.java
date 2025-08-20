@@ -17,7 +17,7 @@ public class AlgorithmResponseMapper {
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static Map<String, AlgorithmsResponse> toMonthAlgorithmsResponse(List<AlgorithmReadModel> algorithmHistories) {
-        Map<LocalDate, List<AlgorithmReadModel>> groups = algorithmHistories.stream().collect(Collectors.groupingBy(AlgorithmReadModel::solvedDate));
+        Map<LocalDate, List<AlgorithmReadModel>> groups = algorithmHistories.stream().collect(Collectors.groupingBy((a)->a.solvedDate().toLocalDate()));
         return groups.entrySet().stream()
                 .collect(Collectors.toMap(
                         e -> e.getKey().format(dateTimeFormatter),
@@ -36,6 +36,7 @@ public class AlgorithmResponseMapper {
                 .url(algorithmHistory.url())
                 .result(algorithmHistory.result())
                 .platform(algorithmHistory.platform())
+                .solvedAt(algorithmHistory.solvedDate())
                 .build();
     }
 }

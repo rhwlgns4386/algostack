@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Table(indexes = @Index(name = "idx_algorithm_user_id_solved_date", columnList = "user_id, solved_date"))
@@ -30,15 +31,15 @@ public class AlgorithmCache extends BaseEntity {
 
     private String url;
 
-    private LocalDate solvedDate;
+    private LocalDateTime lastSolvedAt;
 
-    public AlgorithmCache(UserId userId, AlgorithmId algorithmId, String title, Result result, String url, LocalDate solvedDate) {
+    public AlgorithmCache(UserId userId, AlgorithmId algorithmId, String title, Result result, String url, LocalDateTime lastSolvedAt) {
         this.userId = userId;
         this.algorithmId = algorithmId;
         this.title = title;
         this.result = result;
         this.url = url;
-        this.solvedDate = solvedDate;
+        this.lastSolvedAt = lastSolvedAt;
     }
 
     public void updateResult(Result result) {

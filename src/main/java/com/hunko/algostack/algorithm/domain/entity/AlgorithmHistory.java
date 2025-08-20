@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -32,12 +33,15 @@ public class AlgorithmHistory extends BaseEntity {
 
     private String url;
 
-    public AlgorithmHistory(UserId userId, AlgorithmId algorithmId, String title, Result result, String url) {
+    private LocalDateTime solvedAt;
+
+    public AlgorithmHistory(UserId userId, AlgorithmId algorithmId, String title, Result result, String url, LocalDateTime solvedAt) {
         this.userId = userId;
         this.algorithmId = algorithmId;
         this.title = title;
         this.result = result;
         this.url = url;
+        this.solvedAt = solvedAt;
     }
 
     public Long getPlatformAlgorithmId() {

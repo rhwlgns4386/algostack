@@ -14,6 +14,7 @@ public class EventMapper {
 
     private final ObjectMapper objectMapper;
 
+
     public Object toEvent(AlgorithmEvent algorithmEvent) throws JsonDeSerializeException {
         try {
             Class<?> aClass = Class.forName(algorithmEvent.getEventName());

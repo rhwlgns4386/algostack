@@ -7,17 +7,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface AlgorithmCacheRepository extends JpaRepository<AlgorithmCache, Long> {
-    Optional<AlgorithmCache> findByUserIdAndAlgorithmIdAndSolvedDate(UserId userId, AlgorithmId algorithmId, LocalDate solvedDate);
+    @Query("select ac from AlgorithmCache ac where ac.userId = :userId and ac.algorithmId = :algorithmId and ac.lastSolvedAt between :startDate and :endDate")
+    Optional<AlgorithmCache> findByUserIdAndAlgorithmIdAndSolvedDate(UserId userId, AlgorithmId algorithmId, LocalDateTime startDate, LocalDateTime endDate);
 
     @Query("""
             select a
             from AlgorithmCache a
             where a.userId = :userId
-            and a.solvedDate between :startDate and :endDate
+            and a.lastSolvedAt between :startDate and :endDate
             """)
-    List<AlgorithmCache> findByUserIdAndRange(UserId userId, LocalDate startDate, LocalDate endDate);
+    List<AlgorithmCache> findByUserIdAndRange(UserId userId, LocalDateTime startDate, LocalDateTime endDate);
 }

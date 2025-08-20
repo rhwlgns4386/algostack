@@ -15,7 +15,7 @@ public class AlgorithmMapper {
                 algorithmHistory.getTitle(),
                 algorithmHistory.getResult(),
                 algorithmHistory.getUrl(),
-                algorithmHistory.getCreatedAt().toLocalDate()
+                algorithmHistory.getSolvedAt()
         );
     }
 
@@ -26,7 +26,7 @@ public class AlgorithmMapper {
                 algorithmHistory.getTitle(),
                 algorithmHistory.getResult(),
                 algorithmHistory.getUrl(),
-                algorithmHistory.getCreatedAt().toLocalDate()
+                algorithmHistory.getSolvedAt()
         );
     }
 }

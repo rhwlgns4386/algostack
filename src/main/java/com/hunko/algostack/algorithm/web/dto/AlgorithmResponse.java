@@ -13,6 +13,6 @@ public record AlgorithmResponse(
         Platform platform,
         Result result,
         String url,
-        LocalDateTime localDateTime
+        LocalDateTime solvedAt
 ) {
 }

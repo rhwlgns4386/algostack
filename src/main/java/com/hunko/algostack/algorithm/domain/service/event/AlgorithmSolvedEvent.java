@@ -1,10 +1,11 @@
 package com.hunko.algostack.algorithm.domain.service.event;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hunko.algostack.algorithm.domain.entity.AlgorithmHistory;
 import com.hunko.algostack.algorithm.domain.entity.AlgorithmId;
 import com.hunko.algostack.algorithm.domain.entity.Result;
 import com.hunko.algostack.algorithm.domain.entity.UserId;
-import jakarta.persistence.*;
+import com.hunko.algostack.algorithm.domain.vo.SolvedDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,8 @@ public class AlgorithmSolvedEvent {
 
     private String url;
 
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime solvedAt;
 
 
     public AlgorithmSolvedEvent(AlgorithmHistory algorithmHistory) {
@@ -33,6 +35,10 @@ public class AlgorithmSolvedEvent {
         this.title = algorithmHistory.getTitle();
         this.result = algorithmHistory.getResult();
         this.url = algorithmHistory.getUrl();
-        this.createdAt = algorithmHistory.getCreatedAt();
+        this.solvedAt = algorithmHistory.getSolvedAt();
+    }
+
+    public SolvedDateTime getSolvedDateTime() {
+        return new SolvedDateTime(solvedAt);
     }
 }
