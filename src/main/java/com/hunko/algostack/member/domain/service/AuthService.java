@@ -30,7 +30,7 @@ public class AuthService {
         blackListService.validExpireFrom(jti);
     }
 
-    public void singIn(SingInCommand command) {
+    public void signIn(SingInCommand command) {
         memberService.signIn(command);
     }
 }

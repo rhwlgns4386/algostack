@@ -76,6 +76,10 @@ public class TokenProvider {
 
     public Optional<String> getToken(HttpServletRequest request) {
         String header = request.getHeader(AUTH_HEADER);
+        return getToken(header);
+    }
+
+    public Optional<String> getToken(String header) {
         if (header == null || !header.startsWith(BEARER)) {
             return Optional.empty();
         }

@@ -3,6 +3,7 @@ package com.hunko.algostack.member.web.controller;
 import com.hunko.algostack.member.domain.entity.Email;
 import com.hunko.algostack.member.domain.service.AuthService;
 import com.hunko.algostack.member.domain.vo.MemberInfo;
+import com.hunko.algostack.member.exception.ErrorStatus;
 import com.hunko.algostack.member.web.dto.AuthLoginRequest;
 import com.hunko.algostack.member.web.dto.AuthLoginResponse;
 import com.hunko.algostack.member.web.dto.AuthSingInRequest;
@@ -34,17 +35,17 @@ public class AuthController {
         return toAuthLoginResponse(memberInfo);
     }
 
-    @PostMapping("/singin")
+    @PostMapping("/signin")
     @ResponseStatus(HttpStatus.CREATED)
-    public void singin(@Valid @RequestBody AuthSingInRequest authLoginRequest) {
-        authService.singIn(toCommand(authLoginRequest));
+    public void signin(@Valid @RequestBody AuthSingInRequest authLoginRequest) {
+        authService.signIn(toCommand(authLoginRequest));
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthLoginResponse> refresh(@Valid @NotBlank @RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
-
-        String email = tokenProvider.getEmailFromToken(refreshToken);
-        String jti = tokenProvider.getJtiFromToken(refreshToken);
+        String token = tokenProvider.getToken(refreshToken).orElseThrow(ErrorStatus.AUTHENTICATION_FAIL::toException);
+        String email = tokenProvider.getEmailFromToken(token);
+        String jti = tokenProvider.getJtiFromToken(token);
 
         MemberInfo memberInfo = authService.refresh(jti, new Email(email));
 
