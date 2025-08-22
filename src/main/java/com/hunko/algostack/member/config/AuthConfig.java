@@ -34,7 +34,7 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain authFilterChain(HttpSecurity http) throws Exception {
         return http
-                .securityMatcher("/auth/**")
+                .securityMatcher("/api/auth/**")
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)

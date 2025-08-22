@@ -4,10 +4,12 @@ import com.hunko.algostack.member.domain.entity.Email;
 import com.hunko.algostack.member.domain.service.AuthService;
 import com.hunko.algostack.member.domain.vo.MemberInfo;
 import com.hunko.algostack.member.exception.ErrorStatus;
+import com.hunko.algostack.member.exception.JwtAuthenticationException;
 import com.hunko.algostack.member.web.dto.AuthLoginRequest;
 import com.hunko.algostack.member.web.dto.AuthLoginResponse;
 import com.hunko.algostack.member.web.dto.AuthSingInRequest;
 import com.hunko.algostack.member.web.provider.TokenProvider;
+import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,7 @@ import static com.hunko.algostack.member.web.mapper.CommandMapper.toCommand;
 import static com.hunko.algostack.member.web.mapper.CommandMapper.toLoginResponse;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -43,13 +45,18 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthLoginResponse> refresh(@Valid @NotBlank @RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
-        String token = tokenProvider.getToken(refreshToken).orElseThrow(ErrorStatus.AUTHENTICATION_FAIL::toException);
-        String email = tokenProvider.getEmailFromToken(token);
-        String jti = tokenProvider.getJtiFromToken(token);
+        try {
+            String token = tokenProvider.getToken(refreshToken).orElseThrow(ErrorStatus.AUTHENTICATION_FAIL::toException);
+            String email = tokenProvider.getEmailFromToken(token);
+            String jti = tokenProvider.getJtiFromToken(token);
 
-        MemberInfo memberInfo = authService.refresh(jti, new Email(email));
+            MemberInfo memberInfo = authService.refresh(jti, new Email(email));
 
-        return toAuthLoginResponse(memberInfo);
+            return toAuthLoginResponse(memberInfo);
+        }catch (JwtAuthenticationException e) {
+            throw ErrorStatus.AUTHENTICATION_FAIL.toException();
+        }
+
     }
 
     @DeleteMapping("/logout")
