@@ -44,11 +44,10 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthLoginResponse> refresh(@Valid @NotBlank @RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+    public ResponseEntity<AuthLoginResponse> refresh(@Valid @NotBlank @CookieValue(name = "refreshToken") String refreshToken) {
         try {
-            String token = tokenProvider.getToken(refreshToken).orElseThrow(ErrorStatus.AUTHENTICATION_FAIL::toException);
-            String email = tokenProvider.getEmailFromToken(token);
-            String jti = tokenProvider.getJtiFromToken(token);
+            String email = tokenProvider.getEmailFromToken(refreshToken);
+            String jti = tokenProvider.getJtiFromToken(refreshToken);
 
             MemberInfo memberInfo = authService.refresh(jti, new Email(email));
 
@@ -60,7 +59,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/logout")
-    public void logout(@Valid @NotBlank @RequestHeader(HttpHeaders.AUTHORIZATION) String refreshToken) {
+    public void logout(@Valid @NotBlank @CookieValue(name = "refreshToken") String refreshToken) {
         String jti = tokenProvider.getJtiFromToken(refreshToken);
         authService.addBlackList(jti);
     }

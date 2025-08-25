@@ -36,7 +36,7 @@ public class TokenProvider {
 
     public ResponseCookie refreshTokenCookie(MemberInfo memberInfo) {
         return ResponseCookie.from("refreshToken", createRefreshToken(memberInfo))
-                .httpOnly(true)
+                .sameSite("Lax")
                 .secure(true)
                 .path("/")
                 .maxAge(refreshTokenExpireInSeconds)

@@ -34,7 +34,7 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain authFilterChain(HttpSecurity http) throws Exception {
         return http
-                .securityMatcher("/api/auth/**")
+                .securityMatcher("/api/auth/**","/actuator/**")
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
@@ -66,7 +66,7 @@ public class AuthConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("chrome-extension://*", "http://localhost:3000"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("chrome-extension://*", "https://www.algostack.site"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
